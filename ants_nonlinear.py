@@ -25,7 +25,7 @@ def ants_nonlinear_registration(template, input_image, output, switches='', line
 
 def ants_apply_warp(template, input_image, input_warp, input_affine, output_image, switches='', ants_apply=False, **exec_options):
     if ants_apply:
-        cmd = os.path.join(this_path, 'WarpImageMultiTransform.py')+' %s %s %s %s %s %s' % (switches, input_image, output_image, template, input_warp, input_affine)
+        cmd = os.path.join(this_path, 'tools', 'WarpImageMultiTransform.py')+' %s %s %s %s %s %s' % (switches, input_image, output_image, template, input_warp, input_affine)
     else:
         cmd = 'WarpImageMultiTransform 3 %s %s %s %s -R %s %s' % (input_image, output_image, input_warp, input_affine, template, switches)
     command(cmd, **exec_options)

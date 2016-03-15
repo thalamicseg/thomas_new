@@ -172,7 +172,7 @@ def main(args, temp_path, pool):
         files = [(os.path.join(output_path, label+'.nii.gz'), os.path.join(output_path, label+'.nii.gz')) for label in labels]
     # Resort output to original ordering
     pool.map(parallel_command,
-        ['%s %s %s %s' % (os.path.join(this_path, 'swapdimlike.py'), in_file, orig_input_image, out_file) for in_file, out_file in files])
+        ['%s %s %s %s' % (os.path.join(this_path, 'tools', 'swapdimlike.py'), in_file, orig_input_image, out_file) for in_file, out_file in files])
     print '--- Finished --- Elapsed: %s' % timedelta(seconds=time.time()-t)
 
 
