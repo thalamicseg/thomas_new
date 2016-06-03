@@ -2,7 +2,10 @@
 Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image contrast and PICSL's joint label fusion.  Note that this requires prior/ and template.nii.gz, provided elsewhere.
 
 # Requirements
-- [ANTs](https://github.com/stnava/ANTs.git) (see Installation note)
+- [ANTs](https://github.com/stnava/ANTs.git)
+	- NOTE: as of 5/2016, there is a bug in ANTs/Examples/antsJointFusion.cxx when "-x", fixing this might require rebuilding ANTs.
+	- One way: git clone https://github.com/sujason/ANTs.git, then use cmake to build.
+	- Another way: git clone https://github.com/stnava/ANTs.git, then replace ANTs/Examples/antsJointFusion.cxx with thomas/antsJointFusion.cxx, then use cmake to build.
 - [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
 
@@ -10,9 +13,6 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 - git clone https://github.com/sujason/thomas.git
 - Extract THOMAS-priors.zip to thomas/
 - python require.py
-- NOTE: there is a bug in ANTs/Examples/antsJointFusion.cxx when "-x", fixing this might require rebuilding ANTs.
-	- One way: git clone https://github.com/sujason/ANTs.git, then use cmake to build.
-	- Another way: git clone https://github.com/stnava/ANTs.git, then replace ANTs/Examples/antsJointFusion.cxx with thomas/antsJointFusion.cxx, then use cmake to build.
 
 # Usage
 - python THOMAS_v0.py -h
