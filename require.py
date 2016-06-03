@@ -5,6 +5,7 @@ Check required dependencies
 import os
 import sys
 import subprocess
+import THOMAS_constants
 
 
 def is_tool(name):
