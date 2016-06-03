@@ -116,6 +116,6 @@ if __name__ == '__main__':
     switches.append('d %s' if args.n_dim else '')
     switches.append('-n %s' % interp if interp else '')
     # print args, switches
-    cmd = 'antsApplyTransforms -i %s -o %s -r %s %s -t %s' % (args.moving_image, args.output_image, args.reference_image, ' '.join(switches), transforms)
+    cmd = 'antsApplyTransforms -i %s -o %s -r %s %s -t %s --float 1' % (args.moving_image, args.output_image, args.reference_image, ' '.join(switches), transforms)
     print cmd
     os.system(cmd)

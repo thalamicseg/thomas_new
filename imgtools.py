@@ -1,13 +1,23 @@
 import os
 import sys
+import require
 from parallel import command
+
+
+def check_run(fname, func, *args, **kwargs):
+    """
+    Checks if fname exists first before execuring func.
+    """
+    if os.path.exists(fname):
+        print '%s exists, skipping...' % fname
+        return fname
+    else:
+        return func(*args, **kwargs)
 
 
 """
 segment.py
 """
-
-
 def check_warps(warp_path):
     """
     Checks if the necessary ANTS warps exist.
@@ -19,30 +29,27 @@ def check_warps(warp_path):
     return False
 
 
-def sanitize_input(input_image, output_path):
+def sanitize_input(input_image, output_image, command=os.system):
     """
     Standardizes the input to neurological coordinates and can flip to segment
     right thalamus.
     """
-    output_image = os.path.join(output_path, os.path.basename(input_image))
     if sys.platform == 'linux2' or sys.platform == 'darwin':
-        os.system('fslreorient2std %s %s' % (input_image, output_image))
+        command('fslreorient2std %s %s' % (input_image, output_image))
     return output_image
 
 
-def flip_lr(input_image, output_image):
+def flip_lr(input_image, output_image, command=os.system):
     if sys.platform == 'linux2' or sys.platform == 'darwin':
-        os.system('fslswapdim %s -x y z %s' % (input_image, output_image))
+        command('fslswapdim %s -x y z %s' % (input_image, output_image))
     # else:
-    #     os.system('fsl5.0-fslswapdim %s -x y z %s' % (input_image, output_image))
+    #     command('fsl5.0-fslswapdim %s -x y z %s' % (input_image, output_image))
     return output_image
 
 
 """
 warp_to_all_via_crop
 """
-
-
 def copy_header(reference, target, output, switches='1 1 1', echo=False):
     """
     Copies NIFTI header information from reference to target resulting in output.
@@ -56,8 +63,6 @@ def copy_header(reference, target, output, switches='1 1 1', echo=False):
 """
 warp_to_all
 """
-
-
 def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, **exec_options):
     """
     Compose a to b via an intermediate template space
@@ -88,10 +93,24 @@ def sanitize_label_image(input_image, output_image, **exec_options):
 
 
 """
+cv.py
+"""
+def create_atlas(label, path, subjects, target, output_atlas, echo=False):
+    # Create 4D atlas for a label previously registered to a target subject
+    label_paths = [os.path.join(path, subj, target, label+'.nii.gz') for subj in subjects]
+    cmd = 'fslmerge -t %s %s' % (output_atlas, ' '.join(label_paths))
+    # if echo:
+    #     print cmd
+    # else:
+    #     os.system(cmd)
+    command(cmd, echo=echo)
+    return output_atlas, cmd
+
+
+
+"""
 cv_registration_method
 """
-
-
 def crop_by_mask(input_image, output_image, mask, label=1, padding=0):
     # ExtractRegionFromImageByMask ImageDimension inputImage outputImage labelMaskImage [label=1] [padRadius=0]
     cmd = 'ExtractRegionFromImageByMask 3 %s %s %s %s %s' % (input_image, output_image, mask, label, padding)
@@ -170,8 +189,6 @@ def crop_prior_using_transform(output, crop, mask, padding, prior, affine, prior
 """
 cv_picsl
 """
-
-
 def label_fusion_steps(input_image, image_atlas, label_atlas, output_label, sigma, X, mrf=0., echo=False):
     # Perform steps label fusion.  Parameter naming comes from Cardoso et al. 2013
     # verbose and only consider non-consensus voxels.
@@ -232,7 +249,7 @@ def label_fusion_picsl(input_image, atlas_images, atlas_labels, output_label, rp
     return output_label, cmd
 
 
-def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_label, rp=[2, 2, 2], rs=[3, 3, 3], alpha=0.1, beta=2, **exec_options):
+def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_label, rp=[2, 2, 2], rs=[3, 3, 3], alpha=0.1, beta=2, mask='', **exec_options):
     """
     COMMAND:
          antsJointFusion
@@ -326,11 +343,13 @@ def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_labe
               Print the help menu.
     """
     dim = 3
-    g = '[%s]' % ','.join(atlas_images)
+    g = ' '.join(atlas_images)
     tg = input_image
-    l = '[%s]' % ','.join(atlas_labels)
-    rp = '%dx%dx%d' % tuple(rp)
-    rs = '%dx%dx%d' % tuple(rs)
-    cmd = 'antsJointFusion -d %s -g %s -t %s -l %s -a %g -b %g -p %s -s %s -o %s' % (dim, g, tg, l, alpha, beta, rp, rs, output_label)
+    l = ' '.join(atlas_labels)
+    rp = 'x'.join(['%d' % el for el in rp])
+    rs = 'x'.join(['%d' % el for el in rs])
+    if mask:
+        mask = '-x '+mask
+    cmd = 'antsJointFusion -d %s -g %s -t %s -l %s -a %g -b %g -p %s -s %s %s -o %s' % (dim, g, tg, l, alpha, beta, rp, rs, mask, output_label)
     command(cmd, **exec_options)
     return output_label, cmd

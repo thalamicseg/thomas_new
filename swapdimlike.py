@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 
+
 def read_ordering(f):
     p = subprocess.Popen('fslhd %s' % f, stdout=subprocess.PIPE, shell=True)
     s = p.communicate()[0].split('\n')
@@ -24,5 +25,9 @@ if __name__ == '__main__':
     like_file = sys.argv[2]
     output_file = sys.argv[3]
 
+    for el in [input_file, like_file]:
+        if not os.path.exists(el):
+            print '%s does not exist.' % el
+            sys.exit(1)
     order = read_ordering(like_file)
     os.system('fslswapdim %s %s %s' % (input_file, ' '.join(order), output_file))

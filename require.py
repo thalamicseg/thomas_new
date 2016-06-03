@@ -3,6 +3,7 @@
 Check required dependencies
 """
 import os
+import sys
 import subprocess
 
 
@@ -25,7 +26,9 @@ executables = {
         'fslreorient2std',
         'fslswapdim',
         'fslmaths',
-        ],
+        # 'fslmerge',
+        'fslstats',
+    ],
     'ANTS': [
         'ANTS',
         'N4BiasFieldCorrection',
@@ -35,15 +38,19 @@ executables = {
         'ExtractRegionFromImageByMask',
         'CreateImage',
         'ImageMath',
-        ],
+    ],
     'Convert3D': ['c3d'],
 }
 
+flag = False
+for toolkit, exe in executables.iteritems():
+    for x in filter(lambda el: not is_tool(el), exe):
+        print '%s is missing from %s' % (x, toolkit)
+        flag = True
+if flag:
+    sys.exit(1)
+
+
 if __name__ == '__main__':
-    flag = False
-    for toolkit, exe in executables.iteritems():
-        for x in filter(lambda el: not is_tool(el), exe):
-            print '%s is missing from %s' % (x, toolkit)
-            flag = True
     if not flag:
         print 'All required dependencies for THOMAS were found.'

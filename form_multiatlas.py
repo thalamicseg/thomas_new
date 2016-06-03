@@ -116,6 +116,7 @@ if __name__ == '__main__':
     try:
         assert len(set(label_numbers.values())) == len(label_numbers.values())
     except AssertionError:
+        print 'Make sure the ID number is at the beginning of the filename.'
         print label_numbers
         raise
 
