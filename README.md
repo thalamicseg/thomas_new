@@ -1,6 +1,11 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation
 Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image contrast and PICSL's joint label fusion.  Note that this requires prior/ and template.nii.gz, provided elsewhere.
 
+# Requirements
+- [ANTs](https://github.com/stnava/ANTs.git) (see Installation note)
+- [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
+- [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
+
 # Installation
 - git clone https://github.com/sujason/thomas.git
 - Extract THOMAS-priors.zip to thomas/
