@@ -10,7 +10,7 @@ import re
 import shelve
 import tempfile
 from collections import OrderedDict
-from parallel import BetterPool, command
+from libraries.parallel import BetterPool, command
 
 
 def overlap_c3d(im1, im2, label=1):

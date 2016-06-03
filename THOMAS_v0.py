@@ -7,13 +7,12 @@ import sys
 import argparse
 import tempfile
 import time
-import parallel
+import libraries.parallel as parallel
 from shutil import rmtree
 from functools import partial
-from collections import OrderedDict
 from datetime import timedelta
-from imgtools import check_run, check_warps, sanitize_input, flip_lr, create_atlas, label_fusion_picsl_ants, label_fusion_picsl, ants_compose_a_to_b, ants_apply_only_warp
-from ants_nonlinear import ants_nonlinear_registration, bias_correct
+from libraries.imgtools import check_run, check_warps, sanitize_input, flip_lr, create_atlas, label_fusion_picsl_ants, label_fusion_picsl, ants_compose_a_to_b, ants_apply_only_warp
+from libraries.ants_nonlinear import ants_nonlinear_registration, bias_correct
 from THOMAS_constants import image_name, template, this_path, prior_path, subjects, roi, roi_choices, optimal
 
 
@@ -148,7 +147,7 @@ def main(args, temp_path, pool):
         sanitize_input,
         input_image,
         sanitized_image,
-        parallel_command
+        parallel_command,
     )
     if args.right:
         print '--- Flipping along L-R. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
@@ -221,7 +220,7 @@ def main(args, temp_path, pool):
             conservative_mask,
             warped_labels['1-THALAMUS'].values(),
             mask,
-            dilation=10
+            dilation=10,
         )
         pool.map(partial(label_fusion_picsl_ants, input_image, atlas_images),
             [dict(

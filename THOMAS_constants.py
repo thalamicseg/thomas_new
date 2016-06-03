@@ -9,8 +9,11 @@ image_name = 'WMnMPRAGE_bias_corr.nii.gz'
 # Find path for priors
 this_path = os.path.dirname(os.path.realpath(__file__))
 template = os.path.join(this_path, 'template.nii.gz')
+assert os.path.exists(template)
 prior_path = os.path.join(this_path, 'priors/')
+assert os.path.exists(prior_path)
 subjects = [el for el in os.listdir(prior_path) if os.path.isdir(os.path.join(prior_path, el)) and not el.startswith('.')]
+assert len(subjects) > 0
 
 # Names for command-line options and label filenmaes
 roi = {

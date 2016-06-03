@@ -2,7 +2,6 @@
 """
 Swaps dimension ordering (reslices) of input image to match another.match
 """
-
 import os
 import sys
 import subprocess
