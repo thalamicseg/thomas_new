@@ -5,7 +5,7 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 - git clone https://github.com/sujason/thomas.git
 - Extract THOMAS-priors.zip to thomas/
 - python require.py
-- IMPORTANT: there is a bug in ANTs/Examples/antsJointFusion.cxx when using a mask, this may require rebuilding ANTs.
+- IMPORTANT: there is a bug in ANTs/Examples/antsJointFusion.cxx when "-x", fixing this might require rebuilding ANTs.
 	- One way: git clone https://github.com/sujason/ANTs.git, then use cmake to build.
 	- Another way: git clone https://github.com/stnava/ANTs.git, then replace ANTs/Examples/antsJointFusion.cxx with thomas/antsJointFusion.cxx, then use cmake to build.
 
