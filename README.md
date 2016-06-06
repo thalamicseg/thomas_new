@@ -18,3 +18,4 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 - python THOMAS_v0.py -h
 - Example: python THOMAS_v0.py -p 4 --tempdir ants image.nii.gz ./ ALL
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts.
+
