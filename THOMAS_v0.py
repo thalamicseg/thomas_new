@@ -11,7 +11,7 @@ import libraries.parallel as parallel
 from shutil import rmtree
 from functools import partial
 from datetime import timedelta
-from libraries.imgtools import check_run, check_warps, sanitize_input, flip_lr, create_atlas, label_fusion_picsl_ants, label_fusion_picsl, ants_compose_a_to_b, ants_apply_only_warp
+from libraries.imgtools import check_run, check_warps, sanitize_input, flip_lr, label_fusion_picsl_ants, label_fusion_picsl, ants_compose_a_to_b, ants_apply_only_warp
 from libraries.ants_nonlinear import ants_nonlinear_registration, bias_correct
 from THOMAS_constants import image_name, template, this_path, prior_path, subjects, roi, roi_choices, optimal
 
@@ -265,7 +265,7 @@ def main(args, temp_path, pool):
         files = [(os.path.join(output_path, label + '.nii.gz'), os.path.join(output_path, label + '.nii.gz')) for label in labels]
     # Resort output to original ordering
     pool.map(parallel_command,
-        ['%s %s %s %s' % (os.path.join(this_path, 'tools', 'swapdimlike.py'), in_file, orig_input_image, out_file) for in_file, out_file in files])
+        ['%s %s %s %s' % (os.path.join(this_path, 'swapdimlike.py'), in_file, orig_input_image, out_file) for in_file, out_file in files])
     print '--- Finished --- Elapsed: %s' % timedelta(seconds=time.time() - t)
 
 
