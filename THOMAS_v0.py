@@ -141,31 +141,19 @@ def main(args, temp_path, pool):
         warp_path = os.path.join(temp_path, tail)
 
     t = time.time()
-    sanitized_image = os.path.join(temp_path, os.path.basename(input_image))
-    input_image = check_run(
-        sanitized_image,
-        sanitize_input,
-        input_image,
-        sanitized_image,
-        parallel_command,
-    )
-    if args.right:
-        print '--- Flipping along L-R. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
-        check_run(
-            input_image,
-            flip_lr,
-            input_image,
-            input_image,
-            parallel_command,
-        )
-    print '--- Correcting bias. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
-    check_run(
-        input_image,
-        bias_correct,
-        input_image,
-        input_image,
-        **exec_options
-    )
+    # FSL automatically converts .nii to .nii.gz
+    sanitized_image = os.path.join(temp_path, os.path.basename(input_image) + '.gz' if input_image.endswith('.nii') else '')
+    print '--- Reorienting image. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
+    if not os.path.exists(sanitized_image):
+        input_image = sanitize_input(input_image, sanitized_image, parallel_command)
+        if args.right:
+            print '--- Flipping along L-R. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
+            flip_lr(input_image, input_image, parallel_command)
+        print '--- Correcting bias. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
+        bias_correct(input_image, input_image, **exec_options)
+    else:
+        print 'Skipped, using %s' % sanitized_image
+        input_image = sanitized_image
     print '--- Registering to mean brain template. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
     if args.forcereg or not check_warps(warp_path):
         if args.warp:
