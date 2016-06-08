@@ -3,9 +3,7 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 
 ## Requirements
 - [ANTs](https://github.com/stnava/ANTs.git)
-	- NOTE: as of June 2016, there is a bug in ANTs/Examples/antsJointFusion.cxx when using the "-x" switch, fixing this might require rebuilding ANTs.
-	- One way: git clone https://github.com/sujason/ANTs.git, then use cmake to build.
-	- Another way: git clone https://github.com/stnava/ANTs.git, then replace ANTs/Examples/antsJointFusion.cxx with thomas/antsJointFusion.cxx, then use cmake to build.
+	- NOTE: before April 2016, there was a bug in ANTs/Examples/antsJointFusion.cxx when using the "-x" switch, please rebuild ANTs from the latest source to fix this.
 - [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
 
