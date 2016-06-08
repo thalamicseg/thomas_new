@@ -142,7 +142,8 @@ def main(args, temp_path, pool):
 
     t = time.time()
     # FSL automatically converts .nii to .nii.gz
-    sanitized_image = os.path.join(temp_path, os.path.basename(input_image) + '.gz' if input_image.endswith('.nii') else '')
+    print input_image, temp_path
+    sanitized_image = os.path.join(temp_path, os.path.basename(input_image) + ('.gz' if input_image.endswith('.nii') else ''))
     print '--- Reorienting image. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
     if not os.path.exists(sanitized_image):
         input_image = sanitize_input(input_image, sanitized_image, parallel_command)
