@@ -9,7 +9,7 @@ def check_run(fname, func, *args, **kwargs):
     Checks if fname exists first before execuring func.
     """
     if os.path.exists(fname):
-        print '%s exists, skipping...' % fname
+        print 'Skipped, using %s' % fname
         return fname
     else:
         return func(*args, **kwargs)

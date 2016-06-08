@@ -142,7 +142,6 @@ def main(args, temp_path, pool):
 
     t = time.time()
     # FSL automatically converts .nii to .nii.gz
-    print input_image, temp_path
     sanitized_image = os.path.join(temp_path, os.path.basename(input_image) + ('.gz' if input_image.endswith('.nii') else ''))
     print '--- Reorienting image. --- Elapsed: %s' % timedelta(seconds=time.time()-t)
     if not os.path.exists(sanitized_image):
@@ -171,7 +170,8 @@ def main(args, temp_path, pool):
     warped_labels = pool.map(partial(
         warp_atlas_subject,
         path=prior_path,
-        labels=labels,
+        # TODO cleanup this hack to always have whole thalamus so can estimate mask
+        labels=set(labels + ['1-THALAMUS']),
         input_image=input_image,
         input_transform_prefix=warp_path,
         output_path=temp_path,
