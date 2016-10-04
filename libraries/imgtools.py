@@ -6,7 +6,7 @@ from parallel import command
 
 def check_run(fname, func, *args, **kwargs):
     """
-    Checks if fname exists first before execuring func.
+    Checks if fname exists first before executing func.
     """
     if os.path.exists(fname):
         print 'Skipped, using %s' % fname
@@ -63,7 +63,7 @@ def copy_header(reference, target, output, switches='1 1 1', echo=False):
 """
 warp_to_all
 """
-def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, **exec_options):
+def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, execute=command, **exec_options):
     """
     Compose a to b via an intermediate template space
     """
@@ -73,29 +73,29 @@ def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, 
     b_affine = '-i '+b_transform_prefix+'Affine.txt'
     b_warp = b_transform_prefix+'InverseWarp.nii.gz'
     cmd = 'ComposeMultiTransform 3 %s %s %s %s %s -R %s' % (output, b_affine, b_warp, a_warp, a_affine, b_path)
-    command(cmd, **exec_options)
+    execute(cmd, **exec_options)
     return output, cmd
 
 
-def ants_apply_only_warp(template, input_image, input_warp, output_image, switches='', **exec_options):
+def ants_apply_only_warp(template, input_image, input_warp, output_image, switches='', execute=command, **exec_options):
     cmd = 'WarpImageMultiTransform 3 %s %s %s -R %s %s' % (input_image, output_image, input_warp, template, switches)
-    command(cmd, **exec_options)
+    execute(cmd, **exec_options)
     return output_image, cmd
 
 
-def sanitize_label_image(input_image, output_image, **exec_options):
+def sanitize_label_image(input_image, output_image, execute=command, **exec_options):
     # Slicer puts data in LR convention for some reason
     cmd = 'fslswapdim %s LR PA IS %s; ' % (input_image, output_image)
     # Sometimes values are > 1
     cmd += 'fslmaths %s -bin %s' % (output_image, output_image)
-    command(cmd, **exec_options)
+    execute(cmd, **exec_options)
     return output_image, cmd
 
 
 """
 cv.py
 """
-def create_atlas(label, path, subjects, target, output_atlas, echo=False):
+def create_atlas(label, path, subjects, target, output_atlas, execute=command, echo=False):
     # Create 4D atlas for a label previously registered to a target subject
     label_paths = [os.path.join(path, subj, target, label+'.nii.gz') for subj in subjects]
     cmd = 'fslmerge -t %s %s' % (output_atlas, ' '.join(label_paths))
@@ -103,7 +103,7 @@ def create_atlas(label, path, subjects, target, output_atlas, echo=False):
     #     print cmd
     # else:
     #     os.system(cmd)
-    command(cmd, echo=echo)
+    execute(cmd, echo=echo)
     return output_atlas, cmd
 
 
@@ -298,7 +298,7 @@ def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_labe
          -f, --retain-atlas-voting-images (0)/1
               Retain atlas voting images. Default = false
 
-         -c, --constrain-nonnegative (0)/1
+         -a, --constrain-nonnegative (0)/1
               Constrain solution to non-negative weights.
 
          -p, --patch-radius 2
@@ -352,4 +352,18 @@ def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_labe
         mask = '-x '+mask
     cmd = 'antsJointFusion -d %s -g %s -t %s -l %s -a %g -b %g -p %s -s %s %s -o %s' % (dim, g, tg, l, alpha, beta, rp, rs, mask, output_label)
     command(cmd, **exec_options)
+    return output_label, cmd
+
+
+def label_fusion_majority(atlas_labels, output_label, execute=command, **exec_options):
+    cmd = 'ImageMath 3 %s MajorityVoting %s' % (output_label, ' '.join(atlas_labels))
+    execute(cmd, **exec_options)
+    return output_label, cmd
+
+def label_average(atlas_labels, output_label, execute=command, **exec_options):
+    """
+    Averages the prior candidates, produces an average map, instead of an actual fused label.
+    """
+    cmd = 'c3d %s -mean -o %s' % (' '.join(atlas_labels), output_label)
+    execute(cmd, **exec_options)
     return output_label, cmd

@@ -28,16 +28,15 @@ def warp_atlas_subject(subject, path, labels, input_image, input_transform_prefi
         # Exists
         pass
     combined_warp = os.path.join(output_path, 'Warp.nii.gz')
-    if not os.path.exists(combined_warp):
-        check_run(
-            combined_warp,
-            ants_compose_a_to_b,
-            a_transform_prefix,
-            b_path=input_image,
-            b_transform_prefix=input_transform_prefix,
-            output=combined_warp,
-            **exec_options
-        )
+    check_run(
+        combined_warp,
+        ants_compose_a_to_b,
+        a_transform_prefix,
+        b_path=input_image,
+        b_transform_prefix=input_transform_prefix,
+        output=combined_warp,
+        **exec_options
+    )
     output_labels = {}
     # OPT parallelize, or merge parallelism with subject level
     for label in labels:
@@ -58,18 +57,16 @@ def warp_atlas_subject(subject, path, labels, input_image, input_transform_prefi
     # Warp anatomical WMnMPRAGE_bias_corr too
     # TODO merge this into previous for loop to be DRY?
     output_labels['WMnMPRAGE_bias_corr'] = output_image = os.path.join(output_path, image_name)
-    if not os.path.exists(output_labels['WMnMPRAGE_bias_corr']):
-        print output_labels['WMnMPRAGE_bias_corr']
-        check_run(
-            output_image,
-            ants_apply_only_warp,
-            template=input_image,
-            input_image=os.path.join(path, subject, image_name),
-            input_warp=combined_warp,
-            output_image=output_image,
-            switches='--use-BSpline',
-            **exec_options
-        )
+    check_run(
+        output_image,
+        ants_apply_only_warp,
+        template=input_image,
+        input_image=os.path.join(path, subject, image_name),
+        input_warp=combined_warp,
+        output_image=output_image,
+        switches='--use-BSpline',
+        **exec_options
+    )
     return output_labels
 
 
