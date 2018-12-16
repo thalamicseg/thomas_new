@@ -76,7 +76,13 @@ class CompareOverlap(object):
         vol1 = self.volume[label1]
         vol2 = self.volume[label2]
         # Broadly we want to sort so that the smaller nuclei gets priority, i.e. less percent of it is overwritten by overlap
-        return cmp(overlap/vol1, overlap/vol2)
+        try:
+            return cmp(overlap/vol1, overlap/vol2)
+        except ZeroDivisionError:
+            print 'Maybe label was not 0/1?'
+            print label1, vol1
+            print label2, vol2
+            raise
 
 
 # Approximately Thomas's method, can debate about order of some elements, like VLP and MTT/VA
