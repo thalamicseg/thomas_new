@@ -8,8 +8,16 @@ import shelve
 image_name = 'WMnMPRAGE_bias_corr.nii.gz'
 # Find path for priors
 this_path = os.path.dirname(os.path.realpath(__file__))
-template = os.path.join(this_path, 'template.nii.gz')
-assert os.path.exists(template)
+orig_template = os.path.join(this_path, 'origtemplate.nii.gz')
+assert os.path.exists(orig_template)
+template_61 = os.path.join(this_path, 'templ_61x91x62.nii.gz')
+assert os.path.exists(template_61)
+template_93 = os.path.join(this_path, 'templ_93x187x68.nii.gz')
+assert os.path.exists(template_93)
+mask_61 = os.path.join(this_path, 'mask_templ_61x91x62.nii.gz')
+assert os.path.exists(mask_61)
+mask_93 = os.path.join(this_path, 'mask_templ_93x187x68.nii.gz')
+assert os.path.exists(mask_93)
 prior_path = os.path.join(this_path, 'priors/')
 assert os.path.exists(prior_path)
 subjects = [el for el in os.listdir(prior_path) if os.path.isdir(os.path.join(prior_path, el)) and not el.startswith('.')]
