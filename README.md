@@ -2,8 +2,7 @@
 Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image contrast and PICSL's joint label fusion.  
 
 ## Requirements
-- [ANTs](https://github.com/stnava/ANTs.git)
-	- NOTE: before April 2016, there was a bug in ANTs/Examples/antsJointFusion.cxx when using the "-x" switch, please rebuild ANTs from the latest source to fix this.
+- [ANTs](https://github.com/ANTsX/ANTs/releases)
 - [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
 - [picsl-MALF] (https://www.nitrc.org/frs/?group_id=634) 
