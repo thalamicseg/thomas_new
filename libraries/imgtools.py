@@ -6,7 +6,7 @@ from parallel import command
 
 def check_run(fname, func, *args, **kwargs):
     """
-    Checks if fname exists first before executing func.
+    Checks if fname exists first before execuring func.
     """
     if os.path.exists(fname):
         print 'Skipped, using %s' % fname
@@ -63,7 +63,7 @@ def copy_header(reference, target, output, switches='1 1 1', echo=False):
 """
 warp_to_all
 """
-def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, execute=command, **exec_options):
+def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, **exec_options):
     """
     Compose a to b via an intermediate template space
     """
@@ -73,29 +73,53 @@ def ants_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, 
     b_affine = '-i '+b_transform_prefix+'Affine.txt'
     b_warp = b_transform_prefix+'InverseWarp.nii.gz'
     cmd = 'ComposeMultiTransform 3 %s %s %s %s %s -R %s' % (output, b_affine, b_warp, a_warp, a_affine, b_path)
-    execute(cmd, **exec_options)
+    command(cmd, **exec_options)
+    return output, cmd
+
+def ants_new_compose_a_to_b(a_transform_prefix, b_path, b_transform_prefix, output, **exec_options):
+    """
+    Compose a to b via an intermediate template space
+    """
+    a_affine = a_transform_prefix+'Affine.txt'
+    a_warp = a_transform_prefix+'Warp.nii.gz'
+
+    b_affine = '-i '+b_transform_prefix+'0GenericAffine.mat'
+    b_warp = b_transform_prefix+'1InverseWarp.nii.gz'
+    cmd = 'ComposeMultiTransform 3 %s %s %s %s %s -R %s' % (output, b_affine, b_warp, a_warp, a_affine, b_path)
+    command(cmd, **exec_options)
     return output, cmd
 
 
-def ants_apply_only_warp(template, input_image, input_warp, output_image, switches='', execute=command, **exec_options):
+
+def ants_apply_only_warp(template, input_image, input_warp, output_image, switches='', **exec_options):
     cmd = 'WarpImageMultiTransform 3 %s %s %s -R %s %s' % (input_image, output_image, input_warp, template, switches)
-    execute(cmd, **exec_options)
+    command(cmd, **exec_options)
+    return output_image, cmd
+
+def ants_WarpImageMultiTransform(input_image, output_image, template, **exec_options):
+    cmd = 'WarpImageMultiTransform 3 %s %s -R %s -i linearAffine.txt' % (input_image, output_image, template)
+    command(cmd, **exec_options)
+    return output_image, cmd
+
+def ants_ApplyTransforms(input_image, reference, output_image, **exec_options):
+    cmd = 'antsApplyTransforms -d 3 -i %s -r %s -o %s -t rigid0GenericAffine.mat' % (input_image, reference, output_image)
+    command(cmd, **exec_options)
     return output_image, cmd
 
 
-def sanitize_label_image(input_image, output_image, execute=command, **exec_options):
+def sanitize_label_image(input_image, output_image, **exec_options):
     # Slicer puts data in LR convention for some reason
     cmd = 'fslswapdim %s LR PA IS %s; ' % (input_image, output_image)
     # Sometimes values are > 1
     cmd += 'fslmaths %s -bin %s' % (output_image, output_image)
-    execute(cmd, **exec_options)
+    command(cmd, **exec_options)
     return output_image, cmd
 
 
 """
 cv.py
 """
-def create_atlas(label, path, subjects, target, output_atlas, execute=command, echo=False):
+def create_atlas(label, path, subjects, target, output_atlas, echo=False):
     # Create 4D atlas for a label previously registered to a target subject
     label_paths = [os.path.join(path, subj, target, label+'.nii.gz') for subj in subjects]
     cmd = 'fslmerge -t %s %s' % (output_atlas, ' '.join(label_paths))
@@ -103,7 +127,7 @@ def create_atlas(label, path, subjects, target, output_atlas, execute=command, e
     #     print cmd
     # else:
     #     os.system(cmd)
-    execute(cmd, echo=echo)
+    command(cmd, echo=echo)
     return output_atlas, cmd
 
 
@@ -207,7 +231,6 @@ def label_fusion_picsl(input_image, atlas_images, atlas_labels, output_label, rp
     Joint Label Fusion:
     usage:
      jointfusion dim mod [options] output_image
-
     required options:
       dim                             Image dimension (2 or 3)
       mod                             Number of modalities or features
@@ -263,82 +286,63 @@ def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_labe
               611-623, 2013. and 2) H. Wang and P. A. Yushkevich, Multi-atlas segmentation
               with joint label fusion and corrective learning--an open source implementation,
               Front. Neuroinform., 2013.
-
     OPTIONS:
          -d, --image-dimensionality 2/3/4
               This option forces the image to be treated as a specified-dimensional image. If
               not specified, the program tries to infer the dimensionality from the input
               image.
-
          -t, --target-image targetImage
                             [targetImageModality0,targetImageModality1,...,targetImageModalityN]
               The target image (or multimodal target images) assumed to be aligned to a common
               image domain.
-
          -g, --atlas-image atlasImage
                            [atlasImageModality0,atlasImageModality1,...,atlasImageModalityN]
               The atlas image (or multimodal atlas images) assumed to be aligned to a common
               image domain.
-
          -l, --atlas-segmentation atlasSegmentation
               The atlas segmentation images. For performing label fusion the number of
               specified segmentations should be identical to the number of atlas image sets.
-
          -a, --alpha 0.1
               Regularization term added to matrix Mx for calculating the inverse. Default =
               0.1
-
          -b, --beta 2.0
               Exponent for mapping intensity difference to the joint error. Default = 2.0
-
          -r, --retain-label-posterior-images (0)/1
               Retain label posterior probability images. Requires atlas segmentations to be
               specified. Default = false
-
          -f, --retain-atlas-voting-images (0)/1
               Retain atlas voting images. Default = false
-
-         -a, --constrain-nonnegative (0)/1
+         -c, --constrain-nonnegative (0)/1
               Constrain solution to non-negative weights.
-
          -p, --patch-radius 2
                             2x2x2
               Patch radius for similarity measures. Default = 2x2x2
-
          -m, --patch-metric (PC)/MSQ
               Metric to be used in determining the most similar neighborhood patch. Options
               include Pearson's correlation (PC) and mean squares (MSQ). Default = PC (Pearson
               correlation).
-
          -s, --search-radius 3
                              3x3x3
                              searchRadiusMap.nii.gz
               Search radius for similarity measures. Default = 3x3x3. One can also specify an
               image where the value at the voxel specifies the isotropic search radius at that
               voxel.
-
          -e, --exclusion-image label[exclusionImage]
               Specify an exclusion region for the given label.
-
          -x, --mask-image maskImageFilename
               If a mask image is specified, fusion is only performed in the mask region.
-
          -o, --output labelFusionImage
                       intensityFusionImageFileNameFormat
                       [labelFusionImage,intensityFusionImageFileNameFormat,<labelPosteriorProbabilityImageFileNameFormat>,<atlasVotingWeightImageFileNameFormat>]
               The output is the intensity and/or label fusion image. Additional optional
               outputs include the label posterior probability images and the atlas voting
               weight images.
-
          --version
               Get version information.
-
          -v, --verbose (0)/1
               Verbose output.
-
          -h
               Print the help menu (short version).
-
          --help
               Print the help menu.
     """
@@ -354,16 +358,7 @@ def label_fusion_picsl_ants(input_image, atlas_images, atlas_labels, output_labe
     command(cmd, **exec_options)
     return output_label, cmd
 
-
 def label_fusion_majority(atlas_labels, output_label, execute=command, **exec_options):
     cmd = 'ImageMath 3 %s MajorityVoting %s' % (output_label, ' '.join(atlas_labels))
-    execute(cmd, **exec_options)
-    return output_label, cmd
-
-def label_average(atlas_labels, output_label, execute=command, **exec_options):
-    """
-    Averages the prior candidates, produces an average map, instead of an actual fused label.
-    """
-    cmd = 'c3d %s -mean -o %s' % (' '.join(atlas_labels), output_label)
     execute(cmd, **exec_options)
     return output_label, cmd

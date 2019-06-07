@@ -23,6 +23,47 @@ def ants_nonlinear_registration(template, input_image, output, switches='', line
     command(cmd, **exec_options)
     return output_warp, output_affine, cmd
 
+def ants_new_nonlinear_registration(template, input_image, output, switches='', **exec_options):
+    """Do nonlinear registration with antsRegistration"""
+    cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] -r [rigid0GenericAffine.mat,1] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.1,3.0] --metric CC[%s,%s,1,4] --convergence [70x70x20,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
+    output_warp = output+'Warp.nii.gz'
+    output_affine = output+'Affine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_affine, cmd
+
+def ants_v0_nonlinear_registration(template, input_image, output, switches='', **exec_options):
+    """Do nonlinear registration with antsRegistration but no -r option """
+    cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.1,3.0] --metric CC[%s,%s,1,4] --convergence [70x70x20,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
+    output_warp = output+'Warp.nii.gz'
+    output_affine = output+'Affine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_affine, cmd
+
+
+
+def ants_linear_registration(template, input_image, cost='CC', **exec_options):
+    cmd = 'ANTS 3 -m %s[%s,%s,1,5] -o linear -i 0 --use-Histogram-Matching --number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000 --rigid-affine true' % (cost, template, input_image)
+    output_warp = 'linearWarp.nii.gz'
+    output_affine = 'linearAffine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_affine, cmd
+
+def ants_oldrigid_registration(template, input_image, cost='CC', **exec_options):
+    cmd = 'ANTS 3 -m %s[%s,%s,1,5] -o linear -i 0 --use-Histogram-Matching --number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000 --rigid-affine false' % (cost, template, input_image)
+    output_warp = 'linearWarp.nii.gz'
+    output_affine = 'linearAffine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_affine, cmd
+
+
+def ants_rigid_registration(fixed, moving, cost='MI', **exec_options):
+    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,1]  --metric %s[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 1e-6,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
+    output_warp = 'rigid.nii.gz'
+    output_rigid = 'rigidGeneric0Affine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_rigid, cmd
+
+
 def ants_apply_warp(template, input_image, input_warp, input_affine, output_image, switches='', ants_apply=False, **exec_options):
     if ants_apply:
         cmd = os.path.join(this_path, 'tools', 'WarpImageMultiTransform.py')+' %s %s %s %s %s %s' % (switches, input_image, output_image, template, input_warp, input_affine)
