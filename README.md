@@ -15,7 +15,7 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 
 ## Usage
 - use the stthomas wrapped provided (install in ~/bin)
-  Usage: stthomas <WMn MPRAGE file> <r> 
+  Usage: stthomas \<WMn MPRAGE file\> \<r\> 
 	Note: the second argument if r would also segment the right side (default is left side)
 - Example: python THOMAS_v0.py -p 4 --tempdir ants --jointfusion image.nii.gz ./ ALL
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts.
