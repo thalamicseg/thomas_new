@@ -1,5 +1,5 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation
-Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image contrast and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (ST THOMAS) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively.
+Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE image contrast and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
 ## Requirements
 - [ANTs](https://github.com/ANTsX/ANTs/releases)
@@ -10,11 +10,10 @@ Segmentation of the thalamus into 12 nuclei using the white-matter-nulled image 
 
 ## Installation
 - git clone https://github.com/thalamicseg/thomas.git
-- Extract priors.tgz to thomas/
 - python require.py
 
 ## Usage
-- use the stthomas wrapped provided (typically keep this in ~/bin)
+- use the stthomas wrapped provided (typically put this in ~/bin)
   Usage: stthomas \<WMn MPRAGE file\> \<r\> 
 	Note: the second argument if r would also segment the right side (default is left side)
 - Example: python STTHOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp $1 ALL
