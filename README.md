@@ -15,9 +15,11 @@ Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE ima
 ## Usage
 - use the thomas_csh wrapper provided (typically put this in ~/bin)
   
-  Usage: thomas_csh WMnMPRAGEfile \<r\> 
+  Usage: thomas_csh WMnMPRAGE_file \<r\> 
 
-  Note: the second argument if set to r would also segment the right side (default is left side)
+  Note: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format
+  
+  Note 2: the second argument if set to r would also segment the right side (default is left side)
 - For full usage of THOMAS, type python THOMAS.py -h
 - Example: python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp $1 ALL
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts. Delete this directory if you want to rerun the full segmentation or it will just use the warps from here.
