@@ -9,7 +9,7 @@ Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE ima
  
 
 ## Installation
-- git clone https://github.com/thalamicseg/thomas.git
+- git clone https://github.com/thalamicseg/thomas_new.git
 - python require.py
 
 ## Usage
