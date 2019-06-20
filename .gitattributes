@@ -1,0 +1,2 @@
+*template.nii.gz filter=lfs diff=lfs merge=lfs -text
+WMnMPRAG*Warp.nii.gz filter=lfs diff=lfs merge=lfs -text
