@@ -17,7 +17,7 @@ Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE ima
   
   Usage: thomas_csh WMnMPRAGE_file \<r\> 
 
-  Note: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format
+  Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path i.e. run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call thomas_csh wmn.nii.gz \<r>
   
   Note 2: the second argument if set to r would also segment the right side (default is left side)
 - For full usage of THOMAS, type python THOMAS.py -h
