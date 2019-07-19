@@ -23,7 +23,7 @@ Temporary Note 7/19/2019: Due to github download bandwidth limitations, some of 
   
   Note 2: the second argument if set to r would also segment the right side (default is left side)
 - For full usage of THOMAS, type python THOMAS.py -h
-- Example: python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp $1 ALL
+- Example: python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp wmnmpragefilename ALL
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts. Delete this directory if you want to rerun the full segmentation or it will just use the warps from here.
 - jointfusion calls the original implementation of the [PICSL MALF algorithm](https://www.nitrc.org/projects/picsl_malf) instead of antsJointFusion.  This was used in the publication.
 - swapdimlike.py - reorients an image to match the orientation of another
