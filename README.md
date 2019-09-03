@@ -1,7 +1,7 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation
 Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE image contrast and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
-Temporary Note 7/19/2019: Due to github download bandwidth limitations, some of these files (priors, templates) may not show up. We are working on an upgrade which should be within a week. Email me at manojsar@radiology.arizona.edu for questions.
+Note: Due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues. (9/2/2019)
 
 ## Requirements
 - [ANTs](https://github.com/ANTsX/ANTs/releases)
