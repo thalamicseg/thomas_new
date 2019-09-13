@@ -1,6 +1,8 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation
 Segmentation of the thalamus into 12 nuclei using white-matter-nulled MPRAGE image contrast and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
+If you wish to run THOMAS on conventional MPRAGE (where CSF is dark) as opposed to White-matter-nulled MPRAGE which is a special pulse sequence (a WIP on GE, FGATIR on Philips, modified MPRAGE on Siemens), please contact me for further instructions at manojar@email.arizona.edu. Just running THOMAS on conventional MPRAGE will likely not work.
+
 Note: Due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues. (9/2/2019)
 
 ## Requirements
@@ -9,6 +11,7 @@ Note: Due to large files, you will need to install git lfs and then download. El
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
 - [PICSL-MALF](https://www.nitrc.org/frs/?group_id=634)
  
+Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine.
 
 ## Installation
 - git clone https://github.com/thalamicseg/thomas_new.git
