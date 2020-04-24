@@ -25,7 +25,7 @@ def ants_nonlinear_registration(template, input_image, output, switches='', line
 
 def ants_new_nonlinear_registration(template, input_image, output, switches='', **exec_options):
     """Do nonlinear registration with antsRegistration"""
-    cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] -r [rigid0GenericAffine.mat,1] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.1,3.0] --metric CC[%s,%s,1,4] --convergence [70x70x20,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
+    cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] -r [rigid0GenericAffine.mat,1] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.25,3.0,0.0] --metric CC[%s,%s,1,4] --convergence [70x90x40,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
     output_warp = output+'Warp.nii.gz'
     output_affine = output+'Affine.txt'
     command(cmd, **exec_options)
