@@ -3,6 +3,8 @@ Segmentation of the thalamus into 12 nuclei using White-matter-nulled MPRAGE ima
 
 <b>If you wish to run THOMAS on conventional MPRAGE (where CSF is dark) as opposed to White-matter-nulled MPRAGE which is a special pulse sequence (a WIP on GE, FGATIR on Philips, modified MPRAGE on Siemens), please contact me for further instructions at manojar@email.arizona.edu. Just running THOMAS on conventional MPRAGE will likely not work.</b>
 
+Update 8/31/2020. A single atlas version of THOMAS suitable for any input (conventional MPRAGE, FLAIR) is available here https://zenodo.org/record/3966531. It is slightly less accurate than running THOMAS multi atlas with majority voting but for the larger nuclei like Pul, MD, VLP, this is miniscule. 
+
 Note: Due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues. (9/2/2019)
 
 ## Requirements
