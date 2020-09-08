@@ -17,7 +17,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
 ## Installation
 - git clone https://github.com/thalamicseg/thomas_new.git
-- python require.py
+- python require.py Right now PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2
 
 ## Usage
 - use the thomas_csh wrapper provided (typically this is kept in ~/bin)
