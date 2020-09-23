@@ -16,8 +16,8 @@ def ants_nonlinear_registration(template, input_image, output, switches='', line
     if linear:
         iterations = '0'
     else:
-        iterations = '30x90x20'
-    cmd = 'ANTS 3 -m %s[%s,%s,1,5] -t SyN[0.25] -r Gauss[3,0] -o %s -i %s --use-Histogram-Matching --number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000 %s' % (cost, template, input_image, output, iterations, switches)
+        iterations = '90x90x20'
+    cmd = 'ANTS 3 -m %s[%s,%s,1,5] -v -t SyN[0.25] -r Gauss[3,0] -o %s -i %s --use-Histogram-Matching --number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000 %s' % (cost, template, input_image, output, iterations, switches)
     output_warp = output+'Warp.nii.gz'
     output_affine = output+'Affine.txt'
     command(cmd, **exec_options)
@@ -25,7 +25,7 @@ def ants_nonlinear_registration(template, input_image, output, switches='', line
 
 def ants_new_nonlinear_registration(template, input_image, output, switches='', **exec_options):
     """Do nonlinear registration with antsRegistration"""
-    cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] -r [rigid0GenericAffine.mat,1] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.25,3.0,0.0] --metric CC[%s,%s,1,4] --convergence [70x90x40,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
+    cmd = 'antsRegistration -v -d 3 --float 0 --output %s --use-histogram-matching 1 -t Rigid[0.1] --metric Mattes[%s,%s,1,32,None] --convergence [500x500x500x500x500,1e-6,10] -f 5x5x5x5x4 -s 1.685x1.4771x1.256x1.0402x0.82235mm -r [rigid0GenericAffine.mat,1] -t Affine[0.1] --metric Mattes[%s,%s,1,64, None] --convergence [450x150x50,1e-7,10] -f 3x2x1 -s 0.60056x0.3677x0mm -t SyN[0.4,3.0] --metric CC[%s,%s,1,5] --convergence [200x200x90x50,1e-10,10] -f 4x3x2x1 -s 0.82x0.6x0.3677x0.0mm' % (output, template, input_image, template, input_image, template, input_image)
     output_warp = output+'Warp.nii.gz'
     output_affine = output+'Affine.txt'
     command(cmd, **exec_options)
