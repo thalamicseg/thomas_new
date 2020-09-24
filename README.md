@@ -5,8 +5,11 @@ Update 8/31/2020. A single atlas version of THOMAS suitable for any input (conve
 
 ## New features
 Compared to 1.0, this version has 
+
 a. support for conventional T1 MPRAGE (see Usage below)
+
 b. support for Mac installs (automatic detection, skips PICSL-MALF)
+
 c. creates left and right directories for output (bilateral processing is default, see Output below)
 
 ## Requirements
