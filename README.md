@@ -1,25 +1,25 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation (version 2.0)
-Segmentation of the thalamus into 12 nuclei using White-matter-nulled MPRAGE images and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
+Segmentation of the thalamus into 12 nuclei using a White-matter-nulled MPRAGE nulti-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
 Update 8/31/2020. A single atlas version of THOMAS suitable for any input (conventional MPRAGE, FLAIR) is available here https://zenodo.org/record/3966531. It is slightly less accurate than running THOMAS multi atlas with majority voting but for the larger nuclei like Pul, MD, VLP, this is miniscule. 
 
 ## New features
 Compared to 1.0, this version has 
 a. support for conventional T1 MPRAGE (see Usage below)
-b. support for Mac installs
-c. creates left and right directories (bilateral processing is default)
+b. support for Mac installs (automatic detection, skips PICSL-MALF)
+c. creates left and right directories for output (bilateral processing is default, see Output below)
 
 ## Requirements
 - [ANTs](https://github.com/ANTsX/ANTs/releases)
 - [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
-- [PICSL-MALF](https://www.nitrc.org/frs/?group_id=634)
+- [PICSL-MALF](https://www.nitrc.org/frs/?group_id=634) 
  
-Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine.
+Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine. MAC users with Mint Linux can use  https://github.com/dzenanz/PICSL_MALF.git for PICSL-MALF and this is compatible with newer ITK versions (e.g. 5.1) 
 
 ## Installation
 - git Due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
-- python require.py Right now PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2
+- python require.py Right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2. 
 
 ## Usage
 - set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new)
@@ -43,3 +43,11 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
 ## Outputs
 left and right contain the outputs which are individual labels, thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. 
+
+## Citation
+The neuroimage paper on THOMAS can be found here https://pubmed.ncbi.nlm.nih.gov/30894331/.
+Please cite 
+Su J, Thomas FT, Kasoff WS, Tourdias T, Choi EY, Rutt BK, Saranathan M. Thalamus Optimized Multi-atlas Segmentation (THOMAS): fast, fully automated segmentation of thalamic nuclei from anatomical MRI. NeuroImage; 194:272-282 (2019)
+
+## Contact
+Please contact Manoj Saranathan manojsar@email.arizona.edu in case you have any questions or difficulties in installation/running. 
