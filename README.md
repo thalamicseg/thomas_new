@@ -13,7 +13,7 @@ a. support for conventional T1 MPRAGE (see Usage below)
 
 b. support for Mac installs (automatic detection,  PICSL-MALF not required)
 
-c. creates left and right directories for output (bilateral processing is default, see Output below)
+c. creates left and right directories for output (bilateral processing is default, see Outputs below)
 
 ## Requirements
 - [ANTs](https://github.com/ANTsX/ANTs/releases)
