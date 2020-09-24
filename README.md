@@ -46,7 +46,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - CustomAtlas.ctbl is provided for visualization. See THOMAS paper for nuclei name expansions. 
 
 ## Outputs
-The directories named left and right contain the outputs which are individual labels, thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. Note that in 6-VLP is split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications. 
+The directories named left and right contain the outputs which are individual labels, thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_inputfilename are well aligned. Note that in 6-VLP is split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications. 
 
 ## Citation
 The neuroimage paper on THOMAS can be found here https://pubmed.ncbi.nlm.nih.gov/30894331/
