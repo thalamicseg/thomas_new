@@ -8,7 +8,7 @@ Compared to 1.0, this version has
 
 a. support for conventional T1 MPRAGE (see Usage below)
 
-b. support for Mac installs (automatic detection, skips PICSL-MALF)
+b. support for Mac installs (automatic detection,  PICSL-MALF not required)
 
 c. creates left and right directories for output (bilateral processing is default, see Output below)
 
