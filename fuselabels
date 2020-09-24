@@ -1,0 +1,45 @@
+#!/bin/tcsh
+set nonomatch
+
+#Fuse all the thalamic labels into one nii file
+#Suffix argument if labels are not 1- or 2- etc and have 1t, 2t etc
+if ( $#argv == 1) then
+    echo "Using $1 suffix for input labels"
+    set suff = $1
+else
+    echo "Using default - suffix for input labels"
+    set suff = "-"
+endif
+
+set c = (2 4 5 6 7 8 9 10 11 12 13 14)
+foreach y ( $c )
+
+foreach z ( $y${suff}*)
+end
+
+echo "Fusing $z"
+if ( $y == 2 ) then
+fslmaths $z -mul $y junk.nii.gz
+else
+fslmaths $z -mul $y junk2.nii.gz
+#fslmaths junk.nii.gz -add junk2.nii.gz junk.nii.gz
+ImageMath 3 junk.nii.gz overadd junk2.nii.gz junk.nii.gz
+endif
+
+#WarpImageMultiTransform 3 $z {$y}t.nii.gz -R crop_WMnMPRAGE.nii.gz -i {$1}0GenericAffine.mat {$1}1InverseWarp.nii.gz --use-NN
+
+#antsApplyTransforms -d 3 -i $z -r crop_WMnMPRAGE.nii.gz -o ${y}t.nii.gz -t {$1}1Warp.nii.gz -t {$1}0GenericAffine.mat -n NearestNeighbor
+
+#ExtractRegionFromImage 3 ${y}t.nii.gz ${y}t.nii.gz $zz
+#c3d $zz ${y}t.nii.gz -overlap 1 
+#c3d $zz ${y}t.nii.gz -overlap 1 |awk '{print $6}' |awk -F, '{print $1}' >> ../atlastest/{$y}.txt
+#antsApplyTransforms -d 3 -i $z -r crop_t1post.nii.gz -o ${y}t.nii.gz -t caff1Warp.nii.gz -t caff0GenericAffine.mat -n NearestNeighbor
+
+end
+mv junk.nii.gz thomas.nii.gz
+rm junk2.nii.gz
+
+echo "Output written to thomas.nii.gz"
+
+
+

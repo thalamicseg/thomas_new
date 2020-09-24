@@ -31,12 +31,12 @@ if ( $#argv >= 1 && $#argv <= 2 ) then
     else
         set fileok = 0
         echo "First argument has to be just the WMn MPRAGE file name without the full path"
-        echo "Please call $0:t in the directory containing the WMn file"
+        echo "Please call $0:t in the directory containing the MPRAGE/T1 file"
 	exit 1
     endif
 else
      set fileok = 0
-     echo "Usage: thomas wmnfile <lo>"
+     echo "Usage: thomas mprage/T1 <lo>"
      echo "Optional argument lo is for just running left side"
      exit 1
 endif
@@ -47,11 +47,7 @@ if ( $#argv == 1 ) then
     echo "Deleting temp"
     \rm -rf temp
   endif
-  if ($Ismac == 1) then
-      ${Thomas}/THOMAS.py -v -a v2 -p 4 -v --tempdir temp $1 ALL
-  else
-      ${Thomas}/THOMAS.py -v -a v2 -p 4 -v --jointfusion --tempdir temp $1 ALL
-  endif
+  ${Thomas}/THOMAS.py -v -a v2 -p 4 -v -M --tempdir temp $1 ALL
   mkdir left
   cp -rf temp/crop_* .
   mv ?-*.nii.gz left
@@ -86,11 +82,7 @@ if ( $#argv == 1 ) then
     \rm -rf tempr
   endif
 
-    if ($Ismac == 1) then
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v -R --tempdir tempr $1 ALL
-      else
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v -R --jointfusion --tempdir tempr $1 ALL
-      endif
+      ${Thomas}/THOMAS.py -a v2 -p 4 -v -R -M --tempdir tempr $1 ALL
 
       mkdir right
 #     THOMAS flips so we want the original crop not the flipped
@@ -131,11 +123,8 @@ endif
     \rm -rf temp
   endif
       echo "Running only left thalamus"
-      if ($Ismac == 1) then
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v --tempdir temp $1 ALL
-      else
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp $1 ALL
-      endif
+
+      ${Thomas}/THOMAS.py -a v2 -p 4 -v -M --tempdir temp $1 ALL
       mkdir left
       cp -rf temp/crop_* .
       mv ?-*.nii.gz left
@@ -161,22 +150,22 @@ endif
       set x = `fslstats $zz -V | awk '{print $2}'`
       echo $zz:r:r $x >> nucleiVols.txt
       end   
-      cd ..
       echo "Done; segmentation results in directory left"
+      cd ..
     endif
-
-    if ($2 == ro) then
+ # Now do the right side 
   if (-d tempr) then
     echo "Deleting tempr"
     \rm -rf tempr
   endif
+
+    if ($2 == ro) then
       echo "Running only right thalamus"
-      if ($Ismac == 1) then
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v -R --tempdir tempr $1 ALL
-      else
-          ${Thomas}/THOMAS.py -a v2 -p 4 -v -R --jointfusion --tempdir tempr $1 ALL
-      endif
+      ${Thomas}/THOMAS.py -a v2 -p 4 -v -R -M --tempdir tempr $1 ALL
+
       mkdir right
+#     THOMAS flips so we want the original crop not the flipped
+#     cp -rf tempr/crop_* .
       mv ?-*.nii.gz right
       mv ??-*.nii.gz right
       mv 4567* right
@@ -203,12 +192,11 @@ endif
       echo $zz:r:r $x >> nucleiVols.txt
       end   
       cd ..
-      echo "Done; segmentation results in directory right"
-    endif
-
+  echo "Done; segmentation results in directory right"
+  endif
 
     if ( ($2 == lo) || ($2 == ro)) then
     else
-      echo "Unrecognized second argument; usage: thomas wmnfile or thomas wmnfile lo/ro"
+      echo "Unrecognized second argument; usage: thomas mprage/T1file or thomas mprage/T1file lo/ro"
     endif
   endif
