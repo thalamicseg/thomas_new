@@ -1,6 +1,9 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation (version 2.0)
 Segmentation of the thalamus into 12 nuclei using a White-matter-nulled MPRAGE nulti-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
+THOMAS workflow is shown below
+![THOMAS workflow](THOMAS.jpg "Workflow")
+
 Update 8/31/2020. A single atlas version of THOMAS suitable for any input (conventional MPRAGE, FLAIR) is available here https://zenodo.org/record/3966531. It is slightly less accurate than running THOMAS multi atlas with majority voting but for the larger nuclei like Pul, MD, VLP, this is miniscule. 
 
 ## New features
