@@ -40,6 +40,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - jointfusion calls the original implementation of the [PICSL MALF algorithm](https://www.nitrc.org/projects/picsl_malf) instead of antsJointFusion.  This was used in the publication. For MACS, it will skip PICSL due to library issues and just call antsJointFusion which is almost identical but a bit slower.
 - swapdimlike.py - reorients an image to match the orientation of another
 - form_multiatlas.py - combines many independent labels together into a single atlas
+- CustomAtlas.ctbl is provided for visualization. See THOMAS paper for nuclei name expansions. 
 
 ## Outputs
 left and right contain the outputs which are individual labels, thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. 
