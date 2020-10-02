@@ -27,7 +27,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - python: run require.py (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
 
 ## Usage
-- set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new)
+- set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
 - use the thomas_csh wrapper provided for WMn MPRAGE data
   
   Usage: thomas_csh WMnMPRAGE_file \<ro/lo\> 
