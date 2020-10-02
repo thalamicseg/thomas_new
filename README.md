@@ -1,19 +1,18 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation (v 2.0)
-Segmentation of the thalamus into 12 nuclei using a White-matter-nulled MPRAGE nulti-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
+Code for segmentation of the thalamus into 12 nuclei using a White-Matter-nulled MPRAGE multi-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
-THOMAS workflow is shown below
+THOMAS workflow is shown below-
 ![THOMAS workflow](THOMAS.jpg "Workflow")
 
-Update 8/31/2020. A single atlas version of THOMAS suitable for any input (conventional MPRAGE, FLAIR) is available here https://zenodo.org/record/3966531. It is slightly less accurate than running THOMAS multi atlas with majority voting but for the larger nuclei like Pul, MD, VLP, this is miniscule. 
 
 ## New features
-Compared to 1.0, this version has 
+Compared to 1.0, this version  
 
-a. support for conventional T1 MPRAGE (see Usage below)
+a. supports  conventional T1 MPRAGE processing (see Usage below)
 
-b. support for Mac installs (automatic detection,  PICSL-MALF not required)
+b. supports  Mac installatios (automatic detection,  PICSL-MALF not required)
 
-c. creates left and right directories for output (bilateral processing is default, see Outputs below)
+c. creates left and right directories for output (bilateral processing is default, see Outputs below) and creates full sized fused labels
 
 ## Requirements
 - [ANTs](https://github.com/ANTsX/ANTs/releases)
@@ -47,17 +46,17 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - swapdimlike.py - reorients an image to match the orientation of another
 - form_multiatlas.py - combines many independent labels together into a single atlas
  
-
 ## Outputs
-The directories named left and right contain the outputs which are individual labels, thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_inputfilename are well aligned. A color table file called CustomAtlas.ctbl is provided for visualization.
+The directories named left and right contain the outputs which are individual labels (e.g. 2-AV.nii.gz for anteroventral and so on), thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (i.e. full size as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. A color table file called CustomAtlas.ctbl is provided for visualization.
 
 ## Thalamic nuclei expansions and label definitions
-	THOMAS outputs the mammillothalamic tract (14-MTT) and the eleven delineated nuclei are grouped as follows:
+THOMAS outputs the mammillothalamic tract (14-MTT) and the eleven delineated nuclei are grouped as follows:
+
 	(i) medial group: mediodorsal (12-MD), centromedian (11-CM), habenula (13-Hb) 
 	(ii) posterior group: pulvinar (8-Pul), medial geniculate nucleus (10-MGN), lateral geniculate nucleus (9-LGN) 
 	(iii) lateral group: ventral posterolateral (7-VPL), ventral lateral anterior (5-VLa), ventral lateral posterior (6-VLp), ventral anterior nucleus (4-VA)
 	(iv) anterior group: anteroventral (2-AV)
-	 Note that 6-VLP is split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications
+__Note that 6-VLP is split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications__
 
 ## Citation
 The neuroimage paper on THOMAS can be found here https://pubmed.ncbi.nlm.nih.gov/30894331/
@@ -67,3 +66,4 @@ The neuroimage paper on THOMAS can be found here https://pubmed.ncbi.nlm.nih.gov
 
 ## Contact
 Please contact Manoj Saranathan manojsar@email.arizona.edu in case you have any questions or difficulties in installation/running. 
+
