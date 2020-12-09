@@ -8,6 +8,7 @@ THOMAS workflow is shown below-
 ## New features
 Compared to 2.0, this version has improved scripts for conventional T1 MPRAGE processing (uses MI and large crops by default).
 It also includes a new mask and a new cropped template for a new -B option which is recommended for cases with enlarged ventricles (e.g. AD)
+To use this option, simply add -B to the call to THOMAS.py in thomas_csh. This is already added in thomas_csh_mv.
 
 Compared to 1.0, this version  
 
