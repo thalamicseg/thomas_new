@@ -42,12 +42,12 @@ else
 endif
 
 if ( $#argv == 1 ) then
-  echo "Running left and right thalamus"
+  echo "Running left and right thalamus MV big"
   if (-d temp) then
     echo "Deleting temp"
     \rm -rf temp
   endif
-  ${Thomas}/THOMAS.py -v -a v2 -p 4 -v -M --tempdir temp $1 ALL
+  ${Thomas}/THOMASmib.py -a v2 -p 4 -v -M --tempdir temp -B $1 ALL
   mkdir left
   cp -rf temp/crop_* .
   mv ?-*.nii.gz left
@@ -60,6 +60,7 @@ if ( $#argv == 1 ) then
   mv rigid* left
   mv temp/*Warp* temp/*Aff* left
   mv temp/registered.nii.gz left
+  mv left/$1 .
 
   cd left
   ${Thomas}/fuselabels
@@ -82,7 +83,7 @@ if ( $#argv == 1 ) then
     \rm -rf tempr
   endif
 
-      ${Thomas}/THOMAS.py -a v2 -p 4 -v -R -M --tempdir tempr $1 ALL
+  ${Thomas}/THOMASmib.py -a v2 -p 4 -v -R -M --tempdir tempr -B $1 ALL
 
       mkdir right
 #     THOMAS flips so we want the original crop not the flipped
@@ -97,6 +98,7 @@ if ( $#argv == 1 ) then
       mv rigid* right
       mv tempr/*Warp* tempr/*Aff* right
       mv tempr/registered.nii.gz right
+      mv right/$1 .
 
       cd right
       ${Thomas}/fuselabels
@@ -122,9 +124,9 @@ endif
     echo "Deleting temp"
     \rm -rf temp
   endif
-      echo "Running only left thalamus"
+      echo "Running only left thalamus MV big"
 
-      ${Thomas}/THOMAS.py -a v2 -p 4 -v -M --tempdir temp $1 ALL
+  ${Thomas}/THOMASmib.py -a v2 -p 4 -v -M --tempdir temp -B $1 ALL
       mkdir left
       cp -rf temp/crop_* .
       mv ?-*.nii.gz left
@@ -137,6 +139,7 @@ endif
       mv rigid* left
       mv temp/*Warp* temp/*Aff* left
       mv temp/registered.nii.gz left
+      mv left/$1 .
 
       cd left
       {$Thomas}/fuselabels
@@ -160,8 +163,8 @@ endif
   endif
 
     if ($2 == ro) then
-      echo "Running only right thalamus"
-      ${Thomas}/THOMAS.py -a v2 -p 4 -v -R -M --tempdir tempr $1 ALL
+      echo "Running only right thalamus MV big"
+  ${Thomas}/THOMASmib.py -a v2 -p 4 -v -R -M --tempdir tempr -B $1 ALL
 
       mkdir right
 #     THOMAS flips so we want the original crop not the flipped
@@ -176,6 +179,7 @@ endif
       mv rigid* right
       mv tempr/*Warp* tempr/*Aff* right
       mv tempr/registered.nii.gz right
+      mv right/$1 .
 
       cd right
       ${Thomas}/fuselabels
