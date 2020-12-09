@@ -31,6 +31,15 @@ def ants_new_nonlinear_registration(template, input_image, output, switches='', 
     command(cmd, **exec_options)
     return output_warp, output_affine, cmd
 
+def ants_mi_nonlinear_registration(template, input_image, output, switches='', **exec_options):
+    """Do nonlinear registration with antsRegistration MI syn """
+    cmd = 'antsRegistration -v -d 3 --float 0 --output %s --use-histogram-matching 1 -t Rigid[0.1] --metric Mattes[%s,%s,1,32,None] --convergence [500x500x500x500x500,1e-6,10] -f 5x5x5x5x4 -s 1.685x1.4771x1.256x1.0402x0.82235mm -r [rigid0GenericAffine.mat,1] -t Affine[0.1] --metric Mattes[%s,%s,1,64, None] --convergence [450x150x50,1e-7,10] -f 3x2x1 -s 0.60056x0.3677x0mm -t SyN[0.4,3.0] --metric MI[%s,%s,1,32,None] --convergence [200x200x90x50,1e-10,10] -f 4x3x2x1 -s 0.82x0.6x0.3677x0.0mm' % (output, template, input_image, template, input_image, template, input_image)
+    output_warp = output+'Warp.nii.gz'
+    output_affine = output+'Affine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_affine, cmd
+
+
 def ants_v0_nonlinear_registration(template, input_image, output, switches='', **exec_options):
     """Do nonlinear registration with antsRegistration but no -r option """
     cmd = 'antsRegistration -d 3 --float 0 --output %s -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100,1e-6,10] -f 8x4x2x1 -s 3x2x1x0vox -t SyN[0.1,3.0] --metric CC[%s,%s,1,4] --convergence [70x70x20,1e-6,10] -f 4x2x1 -s 2x1x0vox' % (output, template, input_image, template, input_image)
@@ -62,6 +71,14 @@ def ants_rigid_registration(fixed, moving, cost='MI', **exec_options):
     output_rigid = 'rigidGeneric0Affine.txt'
     command(cmd, **exec_options)
     return output_warp, output_rigid, cmd
+
+def ants_new_rigid_registration(fixed, moving, cost='MI', **exec_options):
+    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,0]  --metric %s[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 1e-6,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
+    output_warp = 'rigid.nii.gz'
+    output_rigid = 'rigidGeneric0Affine.txt'
+    command(cmd, **exec_options)
+    return output_warp, output_rigid, cmd
+
 
 
 def ants_apply_warp(template, input_image, input_warp, input_affine, output_image, switches='', ants_apply=False, **exec_options):
