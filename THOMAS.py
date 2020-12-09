@@ -13,7 +13,7 @@ from functools import partial
 from datetime import timedelta
 from libraries.imgtools import check_run, check_warps, sanitize_input, flip_lr, label_fusion_picsl_ants, label_fusion_picsl, ants_compose_a_to_b , ants_new_compose_a_to_b, ants_apply_only_warp, ants_WarpImageMultiTransform, ants_ApplyTransforms, crop_by_mask, label_fusion_majority
 from libraries.ants_nonlinear import ants_nonlinear_registration, ants_new_nonlinear_registration, ants_v0_nonlinear_registration, bias_correct, ants_linear_registration, ants_rigid_registration
-from THOMAS_constants import image_name, orig_template, template_93, mask_93, this_path, prior_path, subjects, roi, roi_choices, optimal
+from THOMAS_constants import image_name, orig_template, template_93, mask_93, template_93b, mask_93b, this_path, prior_path, subjects, roi, roi_choices, optimal
 import nibabel
 import numpy as np
 
@@ -165,6 +165,7 @@ parser.add_argument('-v', '--verbose', action='store_true', help='verbose mode')
 parser.add_argument('-d', '--debug', action='store_true', help='debug mode, interactive prompts')
 parser.add_argument('-R', '--right', action='store_true', help='segment right thalamus')
 parser.add_argument('-M', '--majorityvoting', action='store_true', help='use majority voting for joint fusion')
+parser.add_argument('-B', '--bigcrop', action='store_true', help='use bigger crop for handling large ventricles')
 parser.add_argument('--jointfusion', action='store_true', help='use older jointfusion instead of antsJointFusion')
 parser.add_argument('--tempdir', help='temporary directory to store registered atlases.  This will not be deleted as usual.')
 parser.add_argument('--mask', help='custom mask if 93x187x68 mask size is not wanted')
@@ -205,9 +206,14 @@ def main(args, temp_path, pool):
         elif args.template is None and args.mask is not None:
             sys.exit("!!!!!!! Both template and mask need to be specified simultaneously and they need to be of the same size !!!!!!!")
         else:
-            template = template_93
-            mask = mask_93
-            print("Algorithm is v2")
+            if args.bigcrop:
+                template = template_93b
+                mask = mask_93b
+                print("Algorithm is v2 big crop")
+            else:
+                template = template_93
+                mask = mask_93
+                print("Algorithm is v2")
     elif args.algorithm == "v1":
         sys.exit("!!!!!!! v1 algorithm not yet implemented !!!!!!!")
     elif args.algorithm == "v0":
