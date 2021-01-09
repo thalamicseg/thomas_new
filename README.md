@@ -10,7 +10,7 @@ Release date 12/9/2020.
 
 Compared to 2.0, this version has improved scripts for conventional T1 MPRAGE processing (uses MI and large crops by default).
 It also includes a new mask and a new cropped template for a new -B option which is recommended for cases with enlarged ventricles (e.g. AD)
-To use this option, simply add -B to the call to THOMAS.py in thomas_csh. This is already added in thomas_csh_mv.
+To use this option, use thomas_csh_big script. This is already added in thomas_csh_mv by default. 
 
 Compared to 1.0, this version  
 
@@ -34,9 +34,9 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
 ## Usage
 - set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
-- use the thomas_csh wrapper provided for WMn MPRAGE data
+- use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
   
-  Usage: thomas_csh WMnMPRAGE_file \<ro/lo\> 
+  Usage: thomas_csh WMnMPRAGE_file \<ro/lo\>  or thomas_csh_big WMnMPRAGE_file \<ro/lo\> 
 
   Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call thomas_csh wmn.nii.gz \<ro/lo> which can be from a simple csh script
     
