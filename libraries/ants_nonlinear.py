@@ -66,14 +66,15 @@ def ants_oldrigid_registration(template, input_image, cost='CC', **exec_options)
 
 
 def ants_rigid_registration(fixed, moving, cost='MI', **exec_options):
-    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,1]  --metric %s[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 1e-6,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
+    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,1]  --metric %s[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 5e-7,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
     output_warp = 'rigid.nii.gz'
     output_rigid = 'rigidGeneric0Affine.txt'
     command(cmd, **exec_options)
     return output_warp, output_rigid, cmd
 
 def ants_new_rigid_registration(fixed, moving, cost='MI', **exec_options):
-    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,0]  --metric %s[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 1e-6,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
+    cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,1]  --metric MI[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 5e-7,10] -v -f 8x4x2x1 -s 3x2x1x0vox -t Affine[0.1] --metric MI[%s,%s,1,32,Regular,0.25] --convergence [1000x500x250x100, 4e-7,10] -v -f 8x4x2x1 -s 3x2x1x0vox  ' % (fixed, moving, fixed, moving, fixed, moving)
+    #cmd = 'antsRegistration -d 3 --float 0 --output rigid -t Rigid[0.1] -r [%s,%s,1]  --metric %s[%s,%s,1,32,None] --convergence [1000x500x250x100, 1e-6,10] -v -f 8x4x2x1 -s 3x2x1x0vox' % (fixed, moving, cost, fixed, moving)
     output_warp = 'rigid.nii.gz'
     output_rigid = 'rigidGeneric0Affine.txt'
     command(cmd, **exec_options)
