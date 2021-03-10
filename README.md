@@ -31,11 +31,12 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 ## Installation instructions 
 - VERY IMPORTANT PLEASE READ **Git**: due to large files, you will need to install git LFS and then download. Type _git lfs install_ to do that. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
 - After you install, go to thomas_new and do a _ls -l_ and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
+- Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)- this is usually done by adding to PATH in .cshrc or .bashrc
+- set an environment variable THOMAS_HOME in .cshrc or .bashrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
 - **Python**: run require.py (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
 
 ## Usage
-- set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
-- Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)	
+	
 - use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
   
   Usage: thomas_csh WMnMPRAGE_file \<ro/lo\>  or thomas_csh_big WMnMPRAGE_file \<ro/lo\> 
