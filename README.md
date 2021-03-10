@@ -29,7 +29,7 @@ c. creates left and right directories for output (bilateral processing is defaul
 Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine. MAC users with Mint Linux can use  https://github.com/dzenanz/PICSL_MALF.git for PICSL-MALF and this is compatible with newer ITK versions (e.g. 5.1). If it still fails in jointfusion, edit thomas_csh to remove the --jointfusion option in the three locations and retry. This will force the use of antsJointFusion which is slower but works if ANTS is installed.
 
 ## Installation instructions 
-- VERY IMPORTANT PLEASE READ git: due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
+- VERY IMPORTANT PLEASE READ git: due to large files, you will need to install git LFS and then download. Type git lfs install to do that. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
 - python: run require.py (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
 - After you install, go to thomas_new and do a ls -l and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
 
