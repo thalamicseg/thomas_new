@@ -31,7 +31,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 ## Installation instructions 
 - VERY IMPORTANT PLEASE READ git: due to large files, you will need to install git lfs and then download. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
 - python: run require.py (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
-- After you install, go to thomas_new and do a ls -l. originaltemplate should be a huge file. If it is only a few bytes, git lfs was not installed or used.
+- After you install, go to thomas_new and do a ls -l and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
 
 ## Usage
 - set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
