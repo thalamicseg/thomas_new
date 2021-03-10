@@ -34,6 +34,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
 ## Usage
 - set an environment variable THOMAS_HOME in .cshrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
+- Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)	
 - use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
   
   Usage: thomas_csh WMnMPRAGE_file \<ro/lo\>  or thomas_csh_big WMnMPRAGE_file \<ro/lo\> 
