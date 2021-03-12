@@ -43,8 +43,8 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
   Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call the thomas_csh script, usually from a simple csh or bash script
     
-  Note 2: the second argument if set to ro/lo would only segment the right/left side (default is both left and right)
-- use the thomas_csh_mv wrapper provided for standard MPRAGE or T1 (FSPGR in GE) data
+  Note 2: the second argument if set to ro/lo would only segment the right/left side (if missing, it defaults to both left and right)
+- use the thomas_csh_mv wrapper provided for standard MPRAGE or T1 (FSPGR or BRAVO in older GE) data
 
   Usage: ```thomas_csh_mv MPRAGEorT1_file <ro/lo>``` 
   
