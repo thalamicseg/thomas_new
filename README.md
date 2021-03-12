@@ -1,5 +1,5 @@
 # THOMAS: Thalamus-Optimized Multi-Atlas Segmentation (v 2.1)
-Code for segmentation of the thalamus into 12 nuclei using a White-Matter-nulled MPRAGE multi-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
+Code for segmentation of the thalamus into 12 nuclei using a White-Matter-nulled MPRAGE multi-atlas and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. It also supports segmentation of standard T1 MPRAGE using majority voting.
 
 THOMAS workflow is shown below-
 ![THOMAS workflow](THOMAS.jpg "Workflow")
@@ -10,7 +10,7 @@ Release date 12/9/2020.
 
 Compared to 2.0, this version has improved scripts for conventional T1 MPRAGE processing (uses MI and large crops by default).
 It also includes a new mask and a new cropped template for a new -B option which is recommended for cases with enlarged ventricles (e.g. AD)
-To use this option, use thomas_csh_big script. This is already added in thomas_csh_mv by default. 
+To use this option, use _thomas_csh_big_ script. The -B flag is already added in _thomas_csh_mv_ by default. 
 
 Compared to 1.0, this version  
 
