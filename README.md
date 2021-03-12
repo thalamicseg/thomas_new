@@ -29,11 +29,11 @@ c. creates left and right directories for output (bilateral processing is defaul
 Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine. MAC users with Mint Linux can use  https://github.com/dzenanz/PICSL_MALF.git for PICSL-MALF and this is compatible with newer ITK versions (e.g. 5.1). If it still fails in jointfusion, edit thomas_csh to remove the --jointfusion option in the three locations and retry. This will force the use of antsJointFusion which is slower but works if ANTS is installed.
 
 ## Installation instructions 
-- VERY IMPORTANT PLEASE READ **Git**: due to large files, you will need to install git LFS and then download. Type _git lfs install_ to do that. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
-- After you install, go to thomas_new and do a _ls -l_ and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
+- VERY IMPORTANT PLEASE READ **Git**: due to large files, you will need to install git LFS and then download. Type ```git lfs install``` to do that. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
+- After you install, go to thomas_new and do a ```ls -l``` and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
 - Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)- this is usually done by adding to PATH in .cshrc or .bashrc
-- set an environment variable THOMAS_HOME in .cshrc or .bashrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
-- **Python**: run require.py (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
+- Set an environment variable THOMAS_HOME in .cshrc or .bashrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
+- **Python**: run ```python require.py``` (right now, PYTHON 3 is NOT SUPPORTED so please point python to PYTHON 2 [python2.7 seems to work best])
 
 ## Usage
 	
@@ -48,8 +48,8 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 
   Usage: thomas_csh_mv MPRAGEorT1_file \<ro/lo\> 
   
-- For full usage of THOMAS, type python THOMAS.py -h
-- Example: python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp wmnmpragefilename ALL
+- For full usage of THOMAS, type ```python THOMAS.py -h```
+- Example: ```python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp wmnmpragefilename ALL```
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts. Delete this directory if you want to rerun the full segmentation or it will just use the warps from here.
 - jointfusion calls the original implementation of the [PICSL MALF algorithm](https://www.nitrc.org/projects/picsl_malf) instead of antsJointFusion.  This was used in the publication. For MACS, it will skip PICSL due to library issues and just call antsJointFusion which is almost identical but a bit slower.
 - swapdimlike.py - reorients an image to match the orientation of another
