@@ -25,7 +25,7 @@ c. creates left and right directories for output (bilateral processing is defaul
 - [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 - [convert3d](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.C3D)
 - [PICSL-MALF](https://www.nitrc.org/frs/?group_id=634) (see important note below)
-- python 2 (see note below for python3)
+- python 2 (see last point of Installation instructions regarding python3)
  
 Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine. MAC users with Mint Linux can use  https://github.com/dzenanz/PICSL_MALF.git for PICSL-MALF and this is compatible with newer ITK versions (e.g. 5.1). If it still fails in jointfusion, edit thomas_csh to remove the --jointfusion option in the three locations and retry. This will force the use of antsJointFusion which is slower but works if ANTS is installed.
 
