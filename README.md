@@ -39,14 +39,14 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 	
 - use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
   
-  Usage: ```thomas_csh WMnMPRAGE_file \<ro/lo\>```  or ```thomas_csh_big WMnMPRAGE_file \<ro/lo\> ```
+  Usage: ```thomas_csh WMnMPRAGE_file <ro/lo>```  or ```thomas_csh_big WMnMPRAGE_file <ro/lo> ```
 
-  Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call thomas_csh wmn.nii.gz \<ro/lo> which can be from a simple csh script
+  Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call the thomas_csh script, usually from a simple csh or bash script
     
   Note 2: the second argument if set to ro/lo would only segment the right/left side (default is both left and right)
 - use the thomas_csh_mv wrapper provided for standard MPRAGE or T1 (FSPGR in GE) data
 
-  Usage: thomas_csh_mv MPRAGEorT1_file \<ro/lo\> 
+  Usage: ```thomas_csh_mv MPRAGEorT1_file <ro/lo>``` 
   
 - For full usage of THOMAS, type ```python THOMAS.py -h```
 - Example: ```python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp wmnmpragefilename ALL```
