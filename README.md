@@ -37,7 +37,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - After you install, go to thomas_new and do a ```ls -l``` and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
 - Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)- this is usually done by adding to PATH in .cshrc or .bashrc
 - Set an environment variable THOMAS_HOME in .cshrc or .bashrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
-- **Python**: run ```python require.py```  To use python3, do a git LFS clone of thomas_new. You should have a p3.tgz in thomas_new. Extract it there using tar -xvzf p3.tgz and it will replace all the python2 .py files by the new python3 versions. 
+- **Python**: run ```python require.py```  To use python3, first do a git LFS clone of thomas_new as described above. You should see a p3.tgz in thomas_new. Extract it there using ```tar -xvzf p3.tgz``` and it will replace all the python2 .py files by the new python3 versions. 
 ## Usage
 	
 - use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
