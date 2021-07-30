@@ -321,7 +321,7 @@ def main(args, temp_path, pool):
     # atlas_image = atlases['WMnMPRAGE_bias_corr']
     atlas_images = list(warped_labels['WMnMPRAGE_bias_corr'].values())
 
-    print('--- Performing label fusion. --- Elapsed: %s' % timedelta(seconds=time.time() - t))
+    print('--- Performing Label Fusion. --- Elapsed: %s' % timedelta(seconds=time.time() - t))
     # FIXME use whole-brain template registration optimized parameters instead, these are from crop pipeline
     optimal_picsl = optimal['PICSL']
     # for k, v in warped_labels.iteritems():

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """
+
 Segment subject for selected thalamic nuclei using whole-brain registration via a template and PICSL label fusion.
 """
 import os
