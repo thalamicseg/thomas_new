@@ -8,7 +8,7 @@ THOMAS workflow is shown below-
 ## New features
 
 **8/3/2021- Docker container support**
-Click here https://github.com/thalamicseg/thomasdocker
+Click here for a version tested on Linux box only https://github.com/thalamicseg/thomasdocker
 
 **3/12/2021- Patch added to support python 3 (finally !)**
 
