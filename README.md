@@ -36,11 +36,12 @@ c. creates left and right directories for output (bilateral processing is defaul
 Note: you might have to install ITK from scratch to make PICSL-MALF work esp running on CentOS. Ubuntu seems to work fine. MAC users with Mint Linux can use  https://github.com/dzenanz/PICSL_MALF.git for PICSL-MALF and this is compatible with newer ITK versions (e.g. 5.1). If it still fails in jointfusion, edit thomas_csh to remove the --jointfusion option in the three locations and retry. This will force the use of antsJointFusion which is slower but works if ANTS is installed.
 
 ## Installation instructions 
-- VERY IMPORTANT PLEASE READ **Git**: due to large files, you will need to install git LFS and then download. Type ```git lfs install``` to do that. Else you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
-- After you install, go to thomas_new and do a ```ls -l``` and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed or used.
+- VERY IMPORTANT PLEASE READ **Git**: due to large files in the thomas repository, you will need to install git-lfs first. You can do this using ```sudo apt-get install git-lfs```. If git-lfs is not installed, you will only get soft links and not the actual files. Please email manojsar@email.arizona.edu if you have any issues
+- Once git-lfs is installed, you can download thomas using ```git lfs clone https://github.com/thalamicseg/thomas_new.git```
+- After you install, go to thomas_new and do a ```ls -l``` and make sure originaltemplate is a huge file. If it is only a few bytes, git lfs was not installed properly.
 - Make sure you have added the paths to ANTS, FSL, THOMAS, jointfusion and c3d (which is wherever you installed PICSL-MALF and convert3d)- this is usually done by adding to PATH in .cshrc or .bashrc
 - Set an environment variable THOMAS_HOME in .cshrc or .bashrc to where you install thomas (e.g. ~/thomas_new). If you are not familiar with .cshrc, you can hardwire it in thomas_csh and thomas_csh_mv with the line setenv THOMAS_HOME ~/thomas_new (or wherever you install)
-- **Python**: run ```python require.py```  To use python3, first do a git LFS clone of thomas_new as described above. You should see a p3.tgz in thomas_new. Extract it there using ```tar -xvzf p3.tgz``` and it will replace all the python2 .py files by the new python3 versions. 
+- **Python**: run ```python require.py```  To use python3, first do a git lfs clone of thomas_new as described above. You should see a p3.tgz in thomas_new. Extract it there using ```tar -xvzf p3.tgz``` and it will replace all the python2 .py files by the new python3 versions. 
 ## Usage
 	
 - use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
@@ -62,7 +63,7 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - form_multiatlas.py - combines many independent labels together into a single atlas
  
 ## Outputs
-The directories named left and right contain the outputs which are individual labels (e.g. 2-AV.nii.gz for anteroventral and so on), thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (i.e. full size as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. A color table file called CustomAtlas.ctbl is provided for visualization.
+The directories named left and right contain the outputs which are individual labels (e.g. 2-AV.nii.gz for anteroventral and so on), thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (i.e. full size as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. A color table file called CustomAtlas.ctbl is provided for visualization. temp and tempr are for advanced debugging and can be deleted to save space (e.g. add a line at the end of thomas_csh)
 
 ## Thalamic nuclei expansions and label definitions
 THOMAS outputs the mammillothalamic tract (14-MTT) and the eleven delineated nuclei grouped as follows (__Note that 6-VLP is further split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications__)-
