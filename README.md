@@ -44,26 +44,25 @@ Note: you might have to install ITK from scratch to make PICSL-MALF work esp run
 - **Python**: run ```python require.py```  To use python3, first do a git lfs clone of thomas_new as described above. You should see a p3.tgz in thomas_new. Extract it there using ```tar -xvzf p3.tgz``` and it will replace all the python2 .py files by the new python3 versions. 
 ## Usage
 	
-- use the thomas_csh wrapper provided for WMn MPRAGE data (or thomas_csh_big for handling large ventricles such as in older subjects)
+- Use the thomas_csh wrapper provided for WMn MPRAGE or FGATIR data (or thomas_csh_big for handling large ventricles such as in older subjects)
   
   Usage: ```thomas_csh WMnMPRAGE_file <ro/lo>```  or ```thomas_csh_big WMnMPRAGE_file <ro/lo> ```
 
-  Note 1: the first argument is the white matter nulled MPRAGE file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call the thomas_csh script, usually from a simple csh or bash script
+  Note 1: the first argument is the white matter nulled MPRAGE or FGATIR file in NIFTy nii.gz format. Make sure it is just the file name and not a full path (e.g. wmn.nii.gz not ~foo/data/case1/wmn.nii.gz. Basically, run the script in the directory where the file is located. If you have each subject in a directory, go to each directory and call the thomas_csh script, usually from a simple csh or bash script
     
   Note 2: the second argument if set to ro/lo would only segment the right/left side (if missing, it defaults to both left and right)
-- use the thomas_csh_mv wrapper provided for standard MPRAGE or T1 (FSPGR or BRAVO in older GE) data
+- Use the thomas_csh_mv wrapper provided for standard MPRAGE or T1 (FSPGR or BRAVO in older GE) data
 
   Usage: ```thomas_csh_mv MPRAGEorT1_file <ro/lo>``` 
   
 - For full usage of THOMAS, type ```python THOMAS.py -h```
 - Example: ```python THOMAS.py -a v2 -p 4 -v --jointfusion --tempdir temp wmnmpragefilename ALL```
 	- tempdir is often useful in case something goes wrong, you can resume from previous attempts. Delete this directory if you want to rerun the full segmentation or it will just use the warps from here.
-- jointfusion calls the original implementation of the [PICSL MALF algorithm](https://www.nitrc.org/projects/picsl_malf) instead of antsJointFusion.  This was used in the publication. For MACS, it will skip PICSL due to library issues and just call antsJointFusion which is almost identical but a bit slower.
-- swapdimlike.py - reorients an image to match the orientation of another
-- form_multiatlas.py - combines many independent labels together into a single atlas
+
+-
  
 ## Outputs
-The directories named left and right contain the outputs which are individual labels (e.g. 2-AV.nii.gz for anteroventral and so on), thomas.nii.gz which is a single file with all labels fused and thomasfull.nii.gz which is the same size as the input file (i.e. full size as opposed to thomas which is cropped). In addition, nucVols.txt contains the nuclei volumes. regn.nii.gz is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_<inputfilename> are well aligned. A color table file called CustomAtlas.ctbl is provided for visualization. temp and tempr are for advanced debugging and can be deleted to save space (e.g. add a line at the end of thomas_csh)
+The directories named **left** and **right** contain the outputs which are individual labels (e.g. 2-AV.nii.gz for anteroventral and so on), **thomas.nii.gz** which is a single file with all labels fused and **thomasfull.nii.gz** which is the same size as the input file (i.e. full size as opposed to thomas which is cropped). In addition, **nucVols.txt** contains the nuclei volumes. **regn.nii.gz** is the custom template registered to the input image. This file is critical for debugging. Make sure this file and crop_inputfilename are well aligned. Note that this is for left side. The right regn.nii.gz needs to be swapped LR before it will align to crop_inputfilename. A color table file called **CustomAtlas.ctbl** is provided for visualization. temp and tempr are for advanced debugging and can be deleted to save space (e.g. add a line at the end of thomas_csh)
 
 ## Thalamic nuclei expansions and label definitions
 THOMAS outputs the mammillothalamic tract (14-MTT) and the eleven delineated nuclei grouped as follows (__Note that 6-VLP is further split into 6_VLPv and 6_VLPd. 6_VLPv is the same as VIM used for targeting in DBS applications__)-
