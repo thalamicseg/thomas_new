@@ -18,6 +18,7 @@ from THOMAS_constants import image_name, orig_template, template_93, mask_93, te
 import nibabel
 import numpy as np
 
+
 def warp_atlas_subject(subject, path, labels, input_image, input_transform_prefix, output_path, exec_options={}):
     """
     Warp a training set subject's labels to input_image.
@@ -167,6 +168,10 @@ parser.add_argument('-d', '--debug', action='store_true', help='debug mode, inte
 parser.add_argument('-R', '--right', action='store_true', help='segment right thalamus')
 parser.add_argument('-M', '--majorityvoting', action='store_true', help='use majority voting for joint fusion')
 parser.add_argument('-B', '--bigcrop', action='store_true', help='use big crop for mask and template')
+parser.add_argument('-xf', '--fixedImageMask', default="NULL", help='fixed image mask used for non-linear registration')
+parser.add_argument('-xm', '--movingImageMask', default="NULL", help='moving image mask used for non-linear registration')
+
+
 parser.add_argument('--jointfusion', action='store_true', help='use older jointfusion instead of antsJointFusion')
 parser.add_argument('--tempdir', help='temporary directory to store registered atlases.  This will not be deleted as usual.')
 parser.add_argument('--mask', help='custom mask if 93x187x68 mask size is not wanted')
@@ -290,7 +295,11 @@ def main(args, temp_path, pool):
         print('temppath %s warppath %s input_image %s' % (temp_path, warp_path, input_image))
 
         if args.algorithm == "v2":
-            ants_mi_nonlinear_registration(template, input_image, warp_path, **exec_options)
+	    if (args.movingImageMask != "NULL"):
+                print("Using " + args.movingImageMask + " as mask for the moving image.")
+            if (args.fixedImageMask != "NULL"):
+                print("Using " + args.fixedImageMask + " as mask for the fixed image.")
+            ants_mi_nonlinear_registration(template, input_image, warp_path, args.movingImageMask, args.fixedImageMask, **exec_options)
         else:
             ants_v0_nonlinear_registration(template, input_image, warp_path, **exec_options)
 
