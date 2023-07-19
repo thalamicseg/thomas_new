@@ -2,7 +2,7 @@
 Code for segmentation of the thalamus into 12 nuclei using multi-atlas segmentation and PICSL's joint label fusion. Note that this version supports the much faster cropped FOV version (called ST THOMAS in ISMRM abstracts) and the slower original full FOV (THOMAS) using v2 and v0 arguments for -a respectively. 
 
 **NOTE: This version is mainly for segmentation of WMn MPRAGE (FGATIR) data. For T1 data, please use HIPSTHOMAS here  https://github.com/thalamicseg/hipsthomasdocker
-This version supports both image contrasts.**
+The docker version supports both image contrasts and is highly recommended.**
 
 
 THOMAS workflow is shown below-
@@ -15,8 +15,6 @@ THOMAS workflow is shown below-
 Click here for a THOMAS version that supports T1 and WMn https://github.com/thalamicseg/hipsthomasdocker
 We highly recommend using this for most users
 
-**8/3/2021- Docker container support**
-Click here for a version tested on Linux box only https://github.com/thalamicseg/thomasdocker
 
 **3/12/2021- Patch added to support python 3 (finally !)**
 
