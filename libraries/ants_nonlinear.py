@@ -31,9 +31,9 @@ def ants_new_nonlinear_registration(template, input_image, output, switches='', 
     command(cmd, **exec_options)
     return output_warp, output_affine, cmd
 
-def ants_mi_nonlinear_registration(template, input_image, output, switches='', **exec_options):
+def ants_mi_nonlinear_registration(template, input_image, output, movingImageMask="NULL", fixedImageMask="NULL", switches='', **exec_options):
     """Do nonlinear registration with antsRegistration MI syn """
-    cmd = 'antsRegistration -v -d 3 --float 0 --output %s --use-histogram-matching 1 -t Rigid[0.1] --metric Mattes[%s,%s,1,32,None] --convergence [500x500x500x500x500,1e-6,10] -f 5x5x5x5x4 -s 1.685x1.4771x1.256x1.0402x0.82235mm -r [rigid0GenericAffine.mat,1] -t Affine[0.1] --metric Mattes[%s,%s,1,64, None] --convergence [450x150x50,1e-7,10] -f 3x2x1 -s 0.60056x0.3677x0mm -t SyN[0.4,3.0] --metric MI[%s,%s,1,32,None] --convergence [200x200x90x50,1e-10,10] -f 4x3x2x1 -s 0.82x0.6x0.3677x0.0mm' % (output, template, input_image, template, input_image, template, input_image)
+    cmd = 'antsRegistration -v -d 3 -x [%s,%s] --float 0 --output %s --use-histogram-matching 1 -t Rigid[0.1] --metric Mattes[%s,%s,1,32,None] --convergence [500x500x500x500x500,1e-6,10] -f 5x5x5x5x4 -s 1.685x1.4771x1.256x1.0402x0.82235mm -r [rigid0GenericAffine.mat,1] -t Affine[0.1] --metric Mattes[%s,%s,1,64, None] --convergence [450x150x50,1e-7,10] -f 3x2x1 -s 0.60056x0.3677x0mm -t SyN[0.4,3.0] --metric MI[%s,%s,1,32,None] --convergence [200x200x90x50,1e-10,10] -f 4x3x2x1 -s 0.82x0.6x0.3677x0.0mm' % (fixedImageMask, movingImageMask, output, template, input_image, template, input_image, template, input_image)
     output_warp = output+'Warp.nii.gz'
     output_affine = output+'Affine.txt'
     command(cmd, **exec_options)
